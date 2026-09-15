@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --font-display: 'Instrument Serif', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+/* liquid glass (opening page) */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.01);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%,
+    rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+    rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes fade-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-rise { animation: fade-rise 0.8s ease-out both; }
+.animate-fade-rise-delay { animation: fade-rise 0.8s ease-out 0.2s both; }
+.animate-fade-rise-delay-2 { animation: fade-rise 0.8s ease-out 0.4s both; }
+
+body {
+  @apply bg-white text-slate-800 antialiased;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* ---- glassmorphism kit ---- */
+@layer components {
+  .glass {
+    @apply bg-white/80 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-[0_8px_32px_rgba(15,23,42,0.08)];
+  }
+  .glass-soft {
+    @apply bg-white/60 backdrop-blur-lg border border-slate-200 rounded-2xl;
+  }
+  .glass-hover {
+    @apply transition-all duration-200 hover:bg-white hover:border-slate-300;
+  }
+  .glass-input {
+    @apply bg-white backdrop-blur border border-slate-300 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-amber-500/60 focus:ring-2 focus:ring-amber-500/20 transition;
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white
+      bg-gradient-to-r from-amber-500 to-orange-600 shadow-lg shadow-amber-500/25
+      hover:shadow-amber-500/40 hover:brightness-110 active:scale-[0.98] transition-all;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-slate-900
+      glass glass-hover;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-900/5 transition;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold;
+  }
+  .stat-tile {
+    @apply glass p-5;
+  }
+  .kpi-value {
+    @apply text-3xl font-extrabold text-amber-600;
+  }
+  .section-title {
+    @apply text-lg font-bold text-slate-900 flex items-center gap-2;
+  }
+}
+
+/* aurora background (light) */
+.aurora {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+.aurora::before,
+.aurora::after {
+  content: "";
+  position: absolute;
+  width: 42rem;
+  height: 42rem;
+  border-radius: 9999px;
+  filter: blur(120px);
+  opacity: 0.1;
+}
+.aurora::before {
+  background: radial-gradient(circle, #f59e0b, transparent 65%);
+  top: -12rem;
+  left: -10rem;
+  animation: blob 22s infinite ease-in-out;
+}
+.aurora::after {
+  background: radial-gradient(circle, #fb923c, transparent 65%);
+  bottom: -14rem;
+  right: -8rem;
+  animation: blob 28s infinite ease-in-out reverse;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.2);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}

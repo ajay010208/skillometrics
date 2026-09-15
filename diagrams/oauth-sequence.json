@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Supabase OAuth Sign-in Flow",
+    "quality_profile": "showcase",
+    "viewBox": [1080, 560],
+    "column_fit": "spread"
+  },
+  "participants": [
+    { "id": "user", "type": "external", "label": "Trainee", "sublabel": "browser" },
+    { "id": "spa", "type": "frontend", "label": "React SPA", "sublabel": "callback page" },
+    { "id": "supabase", "type": "security", "label": "Supabase Auth", "sublabel": "OAuth + PKCE" },
+    { "id": "idp", "type": "external", "label": "Identity Provider", "sublabel": "Google / GitHub / LinkedIn" },
+    { "id": "api", "type": "backend", "label": "Express API", "sublabel": "oauth-session" },
+    { "id": "db", "type": "database", "label": "Profile Store", "sublabel": "Prisma" }
+  ],
+  "segments": [
+    { "from": 150, "to": 250, "label": "Sign-in handshake" },
+    { "from": 260, "to": 370, "label": "Verify + persist" },
+    { "from": 380, "to": 480, "label": "Session established" }
+  ],
+  "messages": [
+    { "id": "click-signin", "from": "user", "to": "spa", "y": 160, "label": "Continue with Google", "variant": "default" },
+    { "id": "pkce-start", "from": "spa", "to": "supabase", "y": 185, "label": "signInWithOAuth (PKCE)", "variant": "emphasis" },
+    { "id": "idp-redirect", "from": "supabase", "to": "idp", "y": 210, "label": "authorize redirect", "variant": "default" },
+    { "id": "idp-consent", "from": "idp", "to": "supabase", "y": 238, "label": "consent + code", "variant": "return" },
+    { "id": "callback-redirect", "from": "supabase", "to": "spa", "y": 265, "label": "redirect /auth/callback + session", "variant": "return" },
+    { "id": "exchange", "from": "spa", "to": "api", "y": 293, "label": "POST /auth/oauth-session {accessToken}", "variant": "emphasis" },
+    { "id": "get-user", "from": "api", "to": "supabase", "y": 322, "label": "auth.getUser(JWT)", "variant": "security" },
+    { "id": "user-verified", "from": "supabase", "to": "api", "y": 352, "label": "verified user", "variant": "return" },
+    { "id": "upsert-profile", "from": "api", "to": "db", "y": 382, "label": "upsert Profile (+ trainee)", "variant": "default" },
+    { "id": "profile-returned", "from": "db", "to": "api", "y": 412, "label": "profile id + role", "variant": "return" },
+    { "id": "session-response", "from": "api", "to": "spa", "y": 442, "label": "{ id, role, onboarded }", "variant": "return" },
+    { "id": "route-in", "from": "spa", "to": "user", "y": 470, "label": "onboarding or dashboard", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "spa", "from": 165, "to": 475, "type": "frontend" },
+    { "participant": "supabase", "from": 185, "to": 357, "type": "security" },
+    { "participant": "idp", "from": 205, "to": 245, "type": "external" },
+    { "participant": "api", "from": 288, "to": 447, "type": "backend" },
+    { "participant": "db", "from": 377, "to": 417, "type": "database" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Handshake", "items": ["PKCE keeps codes verifiable without a client secret", "Session lands on /auth/callback before any API call"] },
+    { "dot": "rose", "title": "Trust boundary", "items": ["API re-verifies the JWT — the browser is never trusted", "First login upserts a consented trainee profile"] }
+  ]
+}

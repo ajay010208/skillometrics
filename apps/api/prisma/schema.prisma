@@ -1,0 +1,329 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// JSON fields are stored as String and (de)serialized in code — keeps the
+// schema identical for SQLite (zero-setup demo) and Postgres/Supabase.
+
+model Profile {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  name      String
+  role      String // trainee | recruiter | provider | admin
+  trainee   Trainee?
+  recruiter Recruiter?
+  provider  Provider?
+  createdAt DateTime   @default(now())
+}
+
+model Trainee {
+  id                     String       @id @default(cuid())
+  profileId              String?      @unique
+  profile                Profile?     @relation(fields: [profileId], references: [id])
+  name                   String
+  email                  String?
+  phone                  String?
+  state                  String
+  district               String
+  age                    Int?
+  gender                 String?
+  category               String? // General | OBC | SC | ST | EWS
+  education              String?
+  currentStatus          String? // studying | trained | placed | ...
+  targetJobId            String?
+  targetJob              TargetJob?   @relation(fields: [targetJobId], references: [id])
+  linkedinUrl            String?
+  githubUrl              String?
+  portfolioUrl           String?
+  weeklyHours            Int          @default(10)
+  consentTracking        Boolean      @default(true)
+  consentRecruiterVisible Boolean     @default(false)
+  nonPlacementReason     String? // skill-gap | lack-experience | location | certification | ...
+  createdAt              DateTime     @default(now())
+
+  skills       TraineeSkill[]
+  resumes      Resume[]
+  projects     ProjectSubmission[]
+  assessments  Assessment[]
+  matches      Match[]
+  shortlists   Shortlist[]
+  placements   Placement[]
+  roadmapItems RoadmapItem[]
+  enrollments  Enrollment[]
+  chats        ChatMessage[]
+  consentLogs  ConsentLog[]
+}
+
+model ConsentLog {
+  id        String   @id @default(cuid())
+  traineeId String
+  trainee   Trainee  @relation(fields: [traineeId], references: [id])
+  action    String // granted | revoked | recruiter-visible | recruiter-hidden | deletion-request
+  detail    String?
+  createdAt DateTime @default(now())
+}
+
+model Skill {
+  id       String @id @default(cuid())
+  name     String @unique
+  category String
+  aliases  String // JSON string[]
+  skills   TraineeSkill[]
+  resources LearningResource[]
+  roadmapItems RoadmapItem[]
+}
+
+model TargetJob {
+  id             String  @id @default(cuid())
+  title          String  @unique
+  family         String
+  requiredSkills String // JSON [{skillId, weight, minLevel}]
+  trainees       Trainee[]
+}
+
+model Resume {
+  id              String   @id @default(cuid())
+  traineeId       String
+  trainee         Trainee  @relation(fields: [traineeId], references: [id])
+  fileName        String
+  extractedText   String
+  parsedSkills    String // JSON
+  experienceMonths Int     @default(0)
+  createdAt       DateTime @default(now())
+}
+
+model TraineeSkill {
+  id        String  @id @default(cuid())
+  traineeId String
+  trainee   Trainee @relation(fields: [traineeId], references: [id])
+  skillId   String
+  skill     Skill   @relation(fields: [skillId], references: [id])
+  level     Int // 0-100
+  source    String // resume | assessment | project | seed
+  evidence  String?
+  updatedAt DateTime @updatedAt
+
+  @@unique([traineeId, skillId])
+}
+
+model LearningResource {
+  id            String  @id @default(cuid())
+  skillId       String
+  skill         Skill   @relation(fields: [skillId], references: [id])
+  title         String
+  platform      String // YouTube | NPTEL | SWAYAM | freeCodeCamp | Coursera | Microsoft Learn | GeeksforGeeks | ...
+  url           String
+  language      String // English | Hindi
+  cost          String // free | freemium | paid
+  durationHours Float
+  prerequisites String  @default("[]") // JSON string[]
+  rating        Float   @default(4.5)
+  format        String // playlist | course | docs | interactive
+  roadmapItems  RoadmapItem[]
+}
+
+model RoadmapItem {
+  id                String    @id @default(cuid())
+  traineeId         String
+  trainee           Trainee   @relation(fields: [traineeId], references: [id])
+  skillId           String
+  skill             Skill     @relation(fields: [skillId], references: [id])
+  resourceId        String?
+  resource          LearningResource? @relation(fields: [resourceId], references: [id])
+  estHours          Float
+  weeklyHours       Int
+  targetWeeks       Int
+  estCompletionDate DateTime?
+  status            String    @default("pending") // pending | in-progress | done
+  order             Int       @default(0)
+}
+
+model Assessment {
+  id        String   @id @default(cuid())
+  traineeId String
+  trainee   Trainee  @relation(fields: [traineeId], references: [id])
+  skillId   String
+  questions String // JSON [{q, options[4], answerIdx}]
+  answers   String?
+  score     Int? // 0-100
+  takenAt   DateTime @default(now())
+}
+
+model ProjectSubmission {
+  id          String   @id @default(cuid())
+  traineeId   String
+  trainee     Trainee  @relation(fields: [traineeId], references: [id])
+  title       String
+  description String
+  repoUrl     String?
+  liveUrl     String?
+  evaluation  String? // JSON [{skillId, verdict, feedback}]
+  createdAt   DateTime @default(now())
+}
+
+model Recruiter {
+  id        String     @id @default(cuid())
+  profileId String?    @unique
+  profile   Profile?   @relation(fields: [profileId], references: [id])
+  name      String
+  company   String
+  roleTitle String?
+  email     String?
+  jobs      Job[]
+  shortlists Shortlist[]
+}
+
+model Job {
+  id             String    @id @default(cuid())
+  recruiterId    String?
+  recruiter      Recruiter? @relation(fields: [recruiterId], references: [id])
+  title          String
+  company        String
+  state          String
+  district       String
+  salaryMin      Int
+  salaryMax      Int
+  source         String // platform | LinkedIn | Naukri | Internshala | Recruiter
+  postedAt       DateTime  @default(now())
+  requiredSkills String // JSON [{skillId, weight, minLevel}]
+  description    String?
+  active         Boolean   @default(true)
+  matches        Match[]
+  shortlists     Shortlist[]
+}
+
+model Match {
+  id        String   @id @default(cuid())
+  traineeId String
+  trainee   Trainee  @relation(fields: [traineeId], references: [id])
+  jobId     String
+  job       Job      @relation(fields: [jobId], references: [id])
+  score     Int
+  status    String   @default("suggested") // suggested | applied | interviewing | hired
+  createdAt DateTime @default(now())
+
+  @@unique([traineeId, jobId])
+}
+
+model Shortlist {
+  id         String   @id @default(cuid())
+  recruiterId String
+  recruiter  Recruiter @relation(fields: [recruiterId], references: [id])
+  traineeId  String
+  trainee    Trainee  @relation(fields: [traineeId], references: [id])
+  jobId      String?
+  job        Job?     @relation(fields: [jobId], references: [id])
+  status     String   @default("shortlisted") // shortlisted | interviewed | offer | hired
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Placement {
+  id              String   @id @default(cuid())
+  traineeId       String
+  trainee         Trainee  @relation(fields: [traineeId], references: [id])
+  employer        String
+  jobTitle        String
+  joiningDate     DateTime
+  monthlySalary   Int
+  state           String
+  district        String
+  type            String   @default("job") // job | self-employment | apprenticeship
+  employerVerified Boolean @default(false)
+  active          Boolean  @default(true) // false if left during follow-up
+  sourceMatchId   String?
+  createdAt       DateTime @default(now())
+
+  followUps FollowUp[]
+  reviews   CompanyReview[]
+}
+
+model CompanyReview {
+  id                     String    @id @default(cuid())
+  placementId            String    @unique
+  placement              Placement @relation(fields: [placementId], references: [id])
+  companyName            String
+  overallRating          Int // 1-5
+  interviewDifficulty    Int // 1-5
+  interviewQuestions     String    @default("[]") // JSON string[]
+  preparationTips        String?
+  workCultureRating      Int // 1-5
+  salaryNegotiationNotes String?
+  wouldRecommend         Boolean   @default(true)
+  text                   String?
+  createdAt              DateTime  @default(now())
+}
+
+model FollowUp {
+  id            String    @id @default(cuid())
+  placementId   String
+  placement     Placement @relation(fields: [placementId], references: [id])
+  milestone     Int // 3 | 6 | 12 (months)
+  dueAt         DateTime
+  completedAt   DateTime?
+  stillEmployed Boolean?
+  currentSalary Int?
+  skillUsage    Int? // % of daily work using trained skills
+  notes         String?
+  channel       String? // automated-call | whatsapp | assisted
+}
+
+model Provider {
+  id        String   @id @default(cuid())
+  profileId String?  @unique
+  profile   Profile? @relation(fields: [profileId], references: [id])
+  name      String
+  state     String
+  city      String?
+  type      String? // PPP | NGO | Private | Govt
+  courses   Course[]
+}
+
+model Course {
+  id             String   @id @default(cuid())
+  providerId     String
+  provider       Provider @relation(fields: [providerId], references: [id])
+  name           String
+  category       String?
+  durationMonths Int      @default(3)
+  enrollments    Enrollment[]
+}
+
+model Enrollment {
+  id         String   @id @default(cuid())
+  traineeId  String
+  trainee    Trainee  @relation(fields: [traineeId], references: [id])
+  courseId   String
+  course     Course   @relation(fields: [courseId], references: [id])
+  cohort     String // e.g. 2025-Spring
+  status     String   @default("completed") // enrolled | in-progress | completed | dropped
+  enrolledAt DateTime @default(now())
+
+  @@unique([traineeId, courseId])
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  profileId String?
+  traineeId String?
+  trainee   Trainee? @relation(fields: [traineeId], references: [id])
+  role      String // user | agent
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id            String   @id @default(cuid())
+  actorLabel    String
+  entity        String
+  entityId      String?
+  action        String
+  detail        String?
+  createdAt     DateTime @default(now())
+}

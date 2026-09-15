@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Trainee Journey — From Sign-up to Verified Outcome",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    { "id": "trainee", "label": "Trainee" },
+    { "id": "platform", "label": "AI Platform" },
+    { "id": "market", "label": "Recruiter & Market" },
+    { "id": "gov", "label": "Outcome & Government" }
+  ],
+  "phases": [
+    { "id": "onboard", "label": "Onboard & Analyze", "fromCol": 0, "toCol": 1 },
+    { "id": "skilling", "label": "Plan & Prove", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "placement", "label": "Match & Verify", "fromCol": 4, "toCol": 5 }
+  ],
+  "groups": [
+    { "id": "ai_engine", "label": "AI engine", "lane": "platform", "fromCol": 1, "toCol": 3, "variant": "emphasis" },
+    { "id": "verified", "label": "Verified outcomes", "lane": "gov", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["signup", "analysis", "roadmap", "assess", "match", "placement", "outcomes"],
+  "nodes": [
+    { "id": "signup", "lane": "trainee", "col": 0, "type": "external", "label": "Sign Up & Onboard", "sublabel": "OAuth · consent · resume", "width": 132 },
+    { "id": "analysis", "lane": "platform", "col": 1, "type": "backend", "label": "Skill Analysis", "sublabel": "AI gaps + Reality Check", "width": 132 },
+    { "id": "roadmap", "lane": "platform", "col": 2, "type": "backend", "label": "Learning Roadmap", "sublabel": "free resources + timeline", "width": 132 },
+    { "id": "assess", "lane": "platform", "col": 3, "type": "backend", "label": "AI Assessment", "sublabel": "quiz + project validation", "width": 132 },
+    { "id": "match", "lane": "market", "col": 4, "type": "backend", "label": "Job Matching", "sublabel": "explainable fit scores", "width": 132 },
+    { "id": "placement", "lane": "market", "col": 5, "type": "external", "label": "Placement", "sublabel": "recruiter shortlist → hire", "width": 132 },
+    { "id": "dashboard", "lane": "gov", "col": 4, "type": "cloud", "label": "Govt Impact Dashboard", "sublabel": "placement % · retention · wages", "width": 152 },
+    { "id": "outcomes", "lane": "gov", "col": 5, "type": "database", "label": "Verified Outcomes", "sublabel": "3 / 6 / 12-month follow-ups", "width": 132 }
+  ],
+  "edges": [
+    { "id": "signup-analysis", "from": "signup", "to": "analysis", "label": "goals + resume" },
+    { "id": "analysis-roadmap", "from": "analysis", "to": "roadmap" },
+    { "id": "roadmap-assess", "from": "roadmap", "to": "assess" },
+    { "id": "assess-analysis", "from": "assess", "to": "analysis", "label": "level updates readiness", "role": "return", "variant": "dashed" },
+    { "id": "assess-match", "from": "assess", "to": "match", "label": "validated skills" },
+    { "id": "match-placement", "from": "match", "to": "placement", "label": "shortlist → hire" },
+    { "id": "placement-outcomes", "from": "placement", "to": "outcomes", "label": "auto-creates placement" },
+    { "id": "outcomes-dashboard", "from": "outcomes", "to": "dashboard", "label": "aggregated impact", "role": "return", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Why it is unique", "items": ["3 / 6 / 12-month verified follow-ups after placement", "Consent-based longitudinal trainee records", "Explainable job-match scores — 'why 82%?'"] },
+    { "dot": "emerald", "title": "Demo path", "items": ["One-click personas: trainee, recruiter, provider, govt", "AI runs with deterministic fallbacks when no key is set"] }
+  ]
+}

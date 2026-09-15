@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "SkilloMetrics Platform Architecture",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "users", "type": "external", "label": "Platform Users", "sublabel": "Trainee · Recruiter · Provider · Govt", "pos": [20, 300], "size": [156, 68] },
+    { "id": "web", "type": "frontend", "label": "React SPA", "sublabel": "Vite + Tailwind :5173", "pos": [240, 300], "size": [150, 68], "tag": "persona dashboards" },
+    { "id": "api", "type": "backend", "label": "Express API", "sublabel": "Node + Prisma :4000", "pos": [470, 300], "size": [150, 68] },
+    { "id": "db", "type": "database", "label": "Application DB", "sublabel": "SQLite dev · Postgres prod", "pos": [760, 300], "size": [150, 68] },
+    { "id": "supabase", "type": "security", "label": "Supabase Auth", "sublabel": "OAuth + magic links", "pos": [280, 110], "size": [170, 68], "tag": "JWT + PKCE" },
+    { "id": "oauth", "type": "external", "label": "Identity Providers", "sublabel": "Google · GitHub · LinkedIn", "pos": [20, 110], "size": [160, 68] },
+    { "id": "ai", "type": "backend", "label": "AI Service", "sublabel": "FastAPI :8000", "pos": [470, 460], "size": [150, 68], "tag": "deterministic fallback" },
+    { "id": "llm", "type": "cloud", "label": "LLM Provider", "sublabel": "OpenAI-compatible / Gemini", "pos": [760, 460], "size": [150, 68] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "SkilloMetrics deployment", "wraps": ["web", "api", "ai", "db"] }
+  ],
+  "connections": [
+    { "id": "users-web", "from": "users", "to": "web", "label": "HTTPS", "variant": "emphasis" },
+    { "id": "web-api", "from": "web", "to": "api", "label": "REST /api/*", "variant": "emphasis", "labelDy": -14 },
+    { "id": "api-db", "from": "api", "to": "db", "label": "Prisma ORM" },
+    { "id": "web-supabase", "from": "web", "to": "supabase", "label": "sign-in redirect", "fromSide": "top", "toSide": "bottom" },
+    { "id": "supabase-oauth", "from": "supabase", "to": "oauth", "label": "OAuth 2.0" },
+    { "id": "api-supabase", "from": "api", "to": "supabase", "label": "verify JWT · JWKS", "variant": "security", "fromSide": "top", "toSide": "right" },
+    { "id": "api-ai", "from": "api", "to": "ai", "label": "parse · quiz · insights", "labelDy": 24 },
+    { "id": "ai-llm", "from": "ai", "to": "llm", "label": "optional LLM call", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Application", "items": ["One React SPA, four persona dashboards", "Express API + Prisma; FastAPI for AI"] },
+    { "dot": "rose", "title": "Authentication", "items": ["Supabase OAuth + magic links (JWT · PKCE)", "API verifies tokens via Supabase JWKS"] },
+    { "dot": "violet", "title": "Resilience", "items": ["Deterministic AI fallbacks — demo never breaks", "SQLite dev · Supabase Postgres prod"] }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "skillometrics",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,ai,web -c blue,green,magenta \"npm run dev -w api\" \"npm run dev -w ai\" \"npm run dev -w web\"",
+    "dev:no-ai": "concurrently -n api,web -c blue,magenta \"npm run dev -w api\" \"npm run dev -w web\"",
+    "setup": "npm install && npm run setup:ai && npm run db:push && npm run db:seed",
+    "setup:ai": "node apps/ai/run.mjs setup",
+    "db:push": "npm run db:push -w api",
+    "db:seed": "npm run db:seed -w api",
+    "db:postgres": "node apps/api/scripts/switch-provider.mjs postgresql",
+    "db:sqlite": "node apps/api/scripts/switch-provider.mjs sqlite",
+    "typecheck": "npm run typecheck -w api && npm run typecheck -w web",
+    "start:api": "npm run dev -w api",
+    "start:ai": "npm run dev -w ai",
+    "start:web": "npm run dev -w web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
