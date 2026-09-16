@@ -25,3 +25,6 @@ jobs:
 
       - name: Typecheck api + web
         run: npm run typecheck
+
+      - name: Build web app (production bundle)
+        run: npm run build -w web
