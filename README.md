@@ -5,7 +5,7 @@
 ![Auth](https://img.shields.io/badge/auth-Supabase%20OAuth%20%2B%20PKCE-3ECF8E?logo=supabase&logoColor=white)
 ![DB](https://img.shields.io/badge/db-SQLite%20→%20Postgres-336791?logo=sqlite&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)
-![License](https://img.shields.io/badge/license-TBD-lightgrey)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 **Don't just train. Track careers. Verify outcomes.** A longitudinal skilling-outcomes platform for all of India (SIH Problem 26135): consent-based trainee records → AI skill analysis + Reality Check → learning roadmap with real resources → AI assessments & project validation → job matching → placement → verified alumni reviews → 3/6/12-month follow-ups → government impact dashboard.
 
