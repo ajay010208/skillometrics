@@ -8,8 +8,9 @@ export default defineConfig({
     host: process.env.WEB_HOST || undefined, // set WEB_HOST=0.0.0.0 to expose on LAN/tunnels
     allowedHosts: true, // dev-only: allow temporary tunnel hosts (trycloudflare.com etc.)
     proxy: {
-      // default: Express API. Set API_TARGET=http://localhost:5001 to run the
-      // unified Python backend (skillometrics2 prototype) behind the same UI.
+      // Default backend: the Express API bundled with this repo.
+      // Override at runtime with API_TARGET=http://localhost:5001 to run the
+      // unified Python-backend prototype (skillometrics2) behind the same UI.
       "/api": process.env.API_TARGET || "http://localhost:4000",
     },
   },
