@@ -25,6 +25,8 @@ npm run db:seed      # 320+ trainees across 12 states, jobs, resources, reviews
 npm run dev          # boots API :4000, AI :8000, web :5173 together
 ```
 
+> **How the web app talks to the API.** Vite proxies `/api` requests in dev to `http://localhost:4000` (the Express API in this repo) by default. If you want to run the **unified Python-backend prototype** (in the sibling `skillometrics2` repo / local `unified-backend/` folder) behind this same React UI, start it on `:5001` and launch the web app with `API_TARGET=http://localhost:5001 npm run dev -w web`. The proxy is a dev-only convenience; the built production app calls the API URL you deploy it behind.
+
 Open http://localhost:5173 — you'll land on the cinematic opening page. Click **Get Started** and pick a demo persona:
 
 | Persona | Email | Shows |

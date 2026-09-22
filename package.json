@@ -7,17 +7,20 @@
   ],
   "scripts": {
     "dev": "concurrently -n api,ai,web -c blue,green,magenta \"npm run dev -w api\" \"npm run dev -w ai\" \"npm run dev -w web\"",
+    "build": "npm run build -w web && npm run build -w api",
+    "start": "concurrently -n api,ai,web -c blue,green,magenta \"npm run start -w api\" \"npm run start -w ai\" \"npm run start -w web\"",
+    "start:api": "npm run start -w api",
+    "start:ai": "npm run start -w ai",
+    "start:web": "npm run start -w web",
     "dev:no-ai": "concurrently -n api,web -c blue,magenta \"npm run dev -w api\" \"npm run dev -w web\"",
     "setup": "npm install && npm run setup:ai && npm run db:push && npm run db:seed",
     "setup:ai": "node apps/ai/run.mjs setup",
     "db:push": "npm run db:push -w api",
     "db:seed": "npm run db:seed -w api",
+    "db:migrate:deploy": "npm run db:migrate:deploy -w api",
     "db:postgres": "node apps/api/scripts/switch-provider.mjs postgresql",
     "db:sqlite": "node apps/api/scripts/switch-provider.mjs sqlite",
-    "typecheck": "npm run typecheck -w api && npm run typecheck -w web",
-    "start:api": "npm run dev -w api",
-    "start:ai": "npm run dev -w ai",
-    "start:web": "npm run dev -w web"
+    "typecheck": "npm run typecheck -w api && npm run typecheck -w web"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

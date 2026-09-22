@@ -4,7 +4,7 @@ import "./env.js";
 import express from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
-import { API_PORT } from "./lib/config.js";
+import { API_PORT, allowedOrigins } from "./lib/config.js";
 import { setPrisma } from "./lib/db.js";
 import { authMiddleware } from "./lib/auth.js";
 import { apiRouter } from "./routes/index.js";
@@ -13,7 +13,7 @@ const prisma = new PrismaClient();
 setPrisma(prisma);
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: allowedOrigins() }));
 app.use(express.json({ limit: "2mb" }));
 app.use(authMiddleware);
 

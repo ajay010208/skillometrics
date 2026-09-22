@@ -1,0 +1,19 @@
+# Never bake secrets or local state into images
+.env
+**/.env
+*.log
+.freebuff/
+
+# Local databases
+**/dev.db
+**/*.db-journal
+
+# Host machine artifacts — images install their own deps
+node_modules
+**/node_modules
+**/dist
+
+# VCS / docs
+.git
+.github
+*.md

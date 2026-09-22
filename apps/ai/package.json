@@ -1,0 +1,11 @@
+{
+  "name": "ai",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SkilloMetrics AI service (FastAPI). Code lives in app/; this package.json only exposes npm workspace scripts — run.mjs manages the Python venv.",
+  "scripts": {
+    "dev": "node run.mjs dev",
+    "start": "node run.mjs start",
+    "setup": "node run.mjs setup"
+  }
+}
