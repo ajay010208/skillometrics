@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSession } from "../state";
 import { supabase, oauthAvailable, friendlyAuthError } from "../supabase";
-import { api, setToken } from "../api";
+import { api, setToken, API_BASE } from "../api";
 
 const EXPLORE_KEY = "skillometrics_explored";
 
@@ -94,7 +94,7 @@ export default function Opening() {
     // server-side 400, so without this check a disabled provider sends the
     // user to a raw JSON page instead of a helpful hint.
     try {
-      const status = await fetch(`/api/auth/provider-status?provider=${provider}`).then((r) => r.json());
+      const status = await fetch(`${API_BASE}/auth/provider-status?provider=${provider}`).then((r) => r.json());
       if (!status.ok) {
         setNotice(friendlyAuthError({ message: String(status.error ?? "") }));
         setBusy(null);

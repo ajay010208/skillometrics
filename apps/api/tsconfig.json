@@ -7,7 +7,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "noEmit": true
+    "noEmit": false,
+    "outDir": "dist",
+    "rootDir": ".",
+    "declaration": false,
+    "sourceMap": true
   },
   "include": ["src", "prisma/seed.ts"]
 }

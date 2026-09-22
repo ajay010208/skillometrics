@@ -15,6 +15,19 @@ export const authRouter = Router();
 const SUPABASE_URL = process.env.SUPABASE_URL || "";
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || "";
 
+/**
+ * Origin of the deployed frontend, used to build the OAuth redirect URL.
+ * Precedence: WEB_ORIGIN env var → first entry of ALLOWED_ORIGINS →
+ * http://localhost:5173 (local dev). In production set WEB_ORIGIN to the
+ * public frontend URL, e.g. https://your-app.vercel.app — it must also be
+ * registered in Supabase → Authentication → URL Configuration → Redirect URLs.
+ */
+export const WEB_ORIGIN = (
+  process.env.WEB_ORIGIN ||
+  (process.env.ALLOWED_ORIGINS || "").split(",")[0]?.trim().replace(/\/+$/, "") ||
+  "http://localhost:5173"
+);
+
 function splitName(full: string | undefined): { first: string; last: string } {
   const parts = (full ?? "").trim().split(" ").filter(Boolean);
   return { first: parts[0] ?? "Learner", last: parts.slice(1).join(" ") };
@@ -38,7 +51,7 @@ authRouter.get("/auth/provider-status", async (req, res) => {
   if (!provider) return res.status(400).json({ ok: false, error: "provider required" });
   try {
     const r = await fetch(
-      `${SUPABASE_URL}/auth/v1/authorize?provider=${provider}&redirect_to=${encodeURIComponent("http://localhost:5173/auth/callback")}`,
+      `${SUPABASE_URL}/auth/v1/authorize?provider=${provider}&redirect_to=${encodeURIComponent(`${WEB_ORIGIN}/auth/callback`)}`,
       { headers: { apikey: SUPABASE_ANON_KEY } }
     );
     if (!r.ok) {

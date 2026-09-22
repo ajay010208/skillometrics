@@ -10,6 +10,7 @@ from typing import Any, Optional
 
 import httpx
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from .llm import chat_json, llm_available
@@ -18,9 +19,32 @@ from .agent import agent_reply
 
 AI_PORT = int(os.environ.get("AI_PORT", "8000"))
 API_PORT = int(os.environ.get("API_PORT", "4000"))
-API_BASE = f"http://localhost:{API_PORT}/api"
+# Base URL of the Express API (for outbound calls). Override in production
+# when the API lives on another host. Must include the /api path,
+# e.g. API_SERVICE_URL=http://api:4000/api
+API_BASE = (
+    os.environ.get("API_SERVICE_URL") or f"http://localhost:{API_PORT}/api"
+).rstrip("/")
 
 app = FastAPI(title="SkilloMetrics AI", version="1.0.0")
+
+
+def _allowed_origins() -> list[str]:
+    """Comma-separated ALLOWED_ORIGINS, e.g. https://app.example.com,https://skillo.in.
+    Unset in development → allow all (the browser never calls this service
+    directly — the Express API proxies it — so this is belt-and-braces)."""
+    raw = os.environ.get("ALLOWED_ORIGINS", "").strip()
+    if not raw:
+        return ["*"]
+    return [o.strip().rstrip("/") for o in raw.split(",") if o.strip()]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_allowed_origins(),
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/health")

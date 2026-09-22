@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { API_BASE } from "./api";
 
 export type OAuthProvider = "google" | "github" | "linkedin_oidc";
 
@@ -17,7 +18,7 @@ export function friendlyAuthError(err: { message?: string } | null | undefined):
   if (/provider is not enabled/i.test(msg))
     return "This sign-in provider isn't enabled on Supabase yet — dashboard → Authentication → Providers → enable it (paste the provider's Client ID + Secret). Demo accounts below still work.";
   if (/redirect.*(not allowed|not permitted|unsigned)/i.test(msg))
-    return "Supabase rejected the redirect URL — add `http://localhost:5173/auth/callback` under Authentication → URL Configuration → Redirect URLs.";
+    return `Supabase rejected the redirect URL — add \`${window.location.origin}/auth/callback\` under Authentication → URL Configuration → Redirect URLs.`;
   if (/email_address_invalid|invalid (email|recipient)/i.test(msg))
     return "Supabase won't deliver to that address — sign in with a real mailbox you can open (it validates domain deliverability).";
   if (/invalid client|oauth client|client_id/i.test(msg))
@@ -32,7 +33,7 @@ let oauthConfigured: boolean | null = null;
 export async function oauthAvailable(): Promise<boolean> {
   if (oauthConfigured !== null) return oauthConfigured;
   try {
-    const res = await fetch("/api/auth/oauth-configured");
+    const res = await fetch(`${API_BASE}/auth/oauth-configured`);
     const json = (await res.json()) as { configured: boolean };
     oauthConfigured = Boolean(supabase) && json.configured;
   } catch {

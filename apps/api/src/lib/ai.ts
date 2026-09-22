@@ -1,8 +1,9 @@
-import { AI_PORT } from "./config.js";
+import { AI_SERVICE_URL } from "./config.js";
 
-// 127.0.0.1 explicitly — Node resolves "localhost" to ::1 first on many
-// systems, which fails when the AI service binds IPv4 only.
-const AI_BASE = `http://127.0.0.1:${AI_PORT}`;
+// Configurable via AI_SERVICE_URL (see lib/config.ts); defaults to the local
+// dev port on 127.0.0.1 (explicit IPv4 — Node resolves "localhost" to ::1
+// first on many systems, which fails when the AI service binds IPv4 only).
+const AI_BASE = AI_SERVICE_URL;
 
 export interface AiResult<T> {
   data: T | null;
