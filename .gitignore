@@ -19,3 +19,4 @@ diagrams/png/review.html
 diagrams/download-deck.html
 diagrams/*.svg-page.html
 diagrams/png-manifest.json
+.vercel/
