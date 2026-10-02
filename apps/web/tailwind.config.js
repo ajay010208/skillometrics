@@ -7,6 +7,17 @@ export default {
         sans: ["Inter", "system-ui", "sans-serif"],
       },
       colors: {
+        // AA contrast: shade-600 accents darkened to pass 4.5:1 on white
+        // (amber-600 3.19→5.02, orange-600 3.56→5.20, emerald-600 3.77→5.48).
+        amber: {
+          600: "#b45309",
+        },
+        orange: {
+          600: "#c2410c",
+        },
+        emerald: {
+          600: "#047857",
+        },
         neon: {
           cyan: "#f59e0b",
           violet: "#fb923c",

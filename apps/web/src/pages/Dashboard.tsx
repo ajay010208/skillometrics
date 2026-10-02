@@ -274,13 +274,13 @@ export default function Dashboard() {
                         <span className="font-bold text-amber-600">{s.pct}% <span className="text-xs font-normal text-slate-500">({s.count})</span></span>
                       </div>
                       <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-900/[0.06]">
-                        <div className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-violet-400" style={{ width: `${s.pct}%` }} />
+                        <div className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-500" style={{ width: `${s.pct}%` }} />
                       </div>
                     </div>
                   ))}
                 </div>
               </GlassCard>
-              <GlassCard className="border-violet-400/25 p-6">
+              <GlassCard className="border-amber-400/25 p-6">
                 <h2 className="section-title">🤖 AI-written insights for officials</h2>
                 <ul className="mt-4 space-y-3">
                   {insights.insights.map((i, idx) => (

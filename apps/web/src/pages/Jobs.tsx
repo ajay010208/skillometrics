@@ -131,7 +131,7 @@ export default function Jobs() {
         {top.map(({ job, match, breakdown }) => (
           <GlassCard key={job.id} className="p-5">
             <div className="flex flex-wrap items-start gap-4">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/25 to-violet-500/25 text-2xl">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500/25 to-orange-500/25 text-2xl">
                 💼
               </div>
               <div className="min-w-0 flex-1">

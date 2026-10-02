@@ -54,7 +54,7 @@ export default function Assistant() {
       <GlassCard className="flex h-[70vh] flex-col overflow-hidden">
         <div className="border-b border-slate-200 px-5 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500 text-lg">🤖</div>
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-lg">🤖</div>
             <div>
               <div className="font-bold">AI Career Counsellor</div>
               <div className="text-[11px] text-slate-500">{source === "ai" ? "✦ AI mode — powered by an LLM" : "⚡ Smart engine mode — knows your real profile data"}</div>
@@ -73,7 +73,7 @@ export default function Assistant() {
               key={i}
               className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-sm ${
                 m.role === "user"
-                  ? "ml-auto bg-gradient-to-r from-cyan-500/80 to-violet-500/80 text-slate-900"
+                  ? "ml-auto bg-amber-500/80 text-slate-900"
                   : "bg-slate-900/[0.06] text-slate-800"
               }`}
             >
@@ -83,9 +83,9 @@ export default function Assistant() {
           {busy && (
             <div className="w-24 rounded-2xl bg-slate-900/[0.06] px-4 py-3">
               <div className="flex gap-1">
-                <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-300" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-300 [animation-delay:0.15s]" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-300 [animation-delay:0.3s]" />
+                <span className="h-2 w-2 animate-bounce rounded-full bg-amber-400" />
+                <span className="h-2 w-2 animate-bounce rounded-full bg-amber-400 [animation-delay:0.15s]" />
+                <span className="h-2 w-2 animate-bounce rounded-full bg-amber-400 [animation-delay:0.3s]" />
               </div>
             </div>
           )}
