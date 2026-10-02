@@ -73,10 +73,10 @@ export default function Landing() {
         </div>
         <div className="mx-auto mt-10 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
           {[
-            ["12+", "States"],
-            ["320+", "Trainees tracked"],
-            ["90", "Live jobs"],
-            ["3/6/12mo", "Follow-ups"],
+            ["4", "Personas: student → govt"],
+            ["12mo", "Outcome tracking window"],
+            ["3/6/12mo", "Follow-up checkpoints"],
+            ["SIH 26135", "Built for Smart India Hackathon"],
           ].map(([v, l]) => (
             <div key={l} className="glass-soft px-4 py-3">
               <div className="text-xl font-extrabold text-amber-600">{v}</div>
@@ -139,6 +139,15 @@ export default function Landing() {
           ))}
         </div>
       </section>
+
+      {/* footer */}
+      <footer className="flex flex-col items-center justify-between gap-3 border-t border-slate-200 pt-6 text-sm text-slate-500 sm:flex-row">
+        <span>SkilloMetrics — AI Career & Skilling Outcome Platform · SIH 2025</span>
+        <span className="flex gap-4">
+          <Link to="/privacy" className="hover:text-slate-900 hover:underline">Privacy</Link>
+          <Link to="/terms" className="hover:text-slate-900 hover:underline">Terms</Link>
+        </span>
+      </footer>
     </div>
   );
 }

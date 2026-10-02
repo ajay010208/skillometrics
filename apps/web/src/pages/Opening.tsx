@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../state";
 import { supabase, oauthAvailable, friendlyAuthError } from "../supabase";
 import { api, setToken, API_BASE } from "../api";
@@ -152,11 +152,21 @@ export default function Opening() {
         </div>
         <button
           onClick={() => (revealed ? undefined : setRevealed(true))}
+          aria-label={revealed ? "Sign-in options are open" : "Open sign-in options"}
           className="liquid-glass rounded-full px-6 py-2.5 text-sm text-white transition-transform hover:scale-[1.03]"
         >
           Begin Journey
         </button>
       </nav>
+      {/* footer with legal links (kept outside the reveal flow) */}
+      <footer className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center justify-between gap-2 px-8 pb-4 text-xs text-white/60 sm:flex-row">
+        <span>SkilloMetrics — AI Career & Skilling Outcome Platform · SIH 2025</span>
+        <span className="flex gap-4">
+          <Link to="/privacy" className="underline-offset-2 hover:text-white hover:underline">Privacy</Link>
+          <Link to="/terms" className="underline-offset-2 hover:text-white hover:underline">Terms</Link>
+        </span>
+        <Link to="/login" className="sr-only focus:not-sr-only focus:absolute focus:bottom-14 focus:right-8 focus:z-20 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:text-slate-900">Skip to login</Link>
+      </footer>
 
       {/* hero / reveal */}
       <div className="relative z-10 flex flex-col items-center px-6 pb-40 pt-32 text-center">
