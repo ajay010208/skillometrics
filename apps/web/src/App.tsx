@@ -3,6 +3,8 @@ import { SessionProvider, useSession } from "./state";
 import { Layout } from "./components/Layout";
 import { Spinner } from "./components/ui";
 import Landing from "./pages/Landing";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import Opening from "./pages/Opening";
 import AuthCallback from "./pages/AuthCallback";
 import Login from "./pages/Login";
@@ -34,6 +36,8 @@ function Routed() {
       {/* immersive routes render without the app navbar */}
       <Route path="/" element={<Opening />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
       <Route element={<Layout />}>
         <Route path="/welcome" element={<Landing />} />
         <Route path="/login" element={<Login />} />
