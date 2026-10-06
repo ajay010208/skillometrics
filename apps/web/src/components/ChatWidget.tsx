@@ -62,7 +62,11 @@ export function ChatWidget() {
       </button>
 
       {open && (
-        <div className="glass fixed bottom-24 right-5 z-50 flex h-[520px] w-[380px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden !rounded-3xl animate-fade-up">
+        <div
+          className="glass fixed bottom-24 right-5 z-50 flex h-[520px] w-[380px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden !rounded-3xl animate-fade-up"
+          role="region"
+          aria-label="AI Career Counsellor chat"
+        >
           <div className="border-b border-slate-200 px-4 py-3">
             <div className="flex items-center justify-between">
               <div>
@@ -112,7 +116,7 @@ export function ChatWidget() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && send()}
               />
-              <button className="btn-primary !px-4" onClick={send} disabled={busy}>
+              <button className="btn-primary !px-4" onClick={send} disabled={busy} aria-label="Send message">
                 ➤
               </button>
             </div>

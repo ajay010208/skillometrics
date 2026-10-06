@@ -36,7 +36,10 @@ export function Layout() {
       <div className="aurora" />
       <nav className="sticky top-0 z-40 border-b border-slate-200 bg-[white]/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3">
-          <NavLink to="/" className="flex items-center gap-2 text-lg font-extrabold tracking-tight">
+          <NavLink
+            to="/"
+            className="flex items-center gap-2 rounded-lg text-lg font-extrabold tracking-tight focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+          >
             <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
               SkilloMetrics
             </span>
@@ -102,6 +105,19 @@ export function Layout() {
       <main className="mx-auto max-w-7xl px-4 py-6">
         <Outlet />
       </main>
+      <footer className="border-t border-slate-200">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-4 text-xs text-slate-500 sm:flex-row">
+          <span>SkilloMetrics — AI Career & Skilling Outcome Platform · SIH 2025</span>
+          <span className="flex gap-4">
+            <NavLink to="/privacy" className="hover:text-slate-900 hover:underline">
+              Privacy
+            </NavLink>
+            <NavLink to="/terms" className="hover:text-slate-900 hover:underline">
+              Terms
+            </NavLink>
+          </span>
+        </div>
+      </footer>
       {me?.profile?.role === "trainee" && <ChatWidget />}
     </div>
   );

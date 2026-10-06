@@ -108,7 +108,7 @@ export default function Assistant() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send()}
             />
-            <button className="btn-primary !px-5" onClick={() => send()} disabled={busy}>➤</button>
+            <button className="btn-primary !px-5" onClick={() => send()} disabled={busy} aria-label="Send message">➤</button>
           </div>
         </div>
       </GlassCard>

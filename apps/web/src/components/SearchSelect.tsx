@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 interface Option {
   label: string;
@@ -27,6 +27,7 @@ export function SearchSelect({
   const [highlight, setHighlight] = useState(0);
   const [options, setOptions] = useState<Option[]>([]);
   const boxRef = useRef<HTMLDivElement>(null);
+  const listId = useId();
 
   // Support sync or async option sources.
   useEffect(() => {
@@ -67,6 +68,11 @@ export function SearchSelect({
         className="glass-input w-full"
         placeholder={value || placeholder}
         value={open ? query : ""}
+        role="combobox"
+        aria-expanded={open}
+        aria-controls={listId}
+        aria-autocomplete="list"
+        aria-label={placeholder}
         onFocus={() => {
           setOpen(true);
           setQuery("");
@@ -98,12 +104,18 @@ export function SearchSelect({
         </div>
       )}
       {open && (
-        <div className="glass absolute z-30 mt-2 max-h-60 w-full overflow-y-auto !rounded-xl p-1">
+        <div
+          id={listId}
+          role="listbox"
+          className="glass absolute z-30 mt-2 max-h-60 w-full overflow-y-auto !rounded-xl p-1"
+        >
           {options.length === 0 && <div className="px-3 py-3 text-sm text-slate-500">{emptyText}</div>}
           {options.map((o, i) => (
             <button
               key={o.label}
               type="button"
+              role="option"
+              aria-selected={i === highlight}
               onClick={() => pick(o.label)}
               onMouseEnter={() => setHighlight(i)}
               className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm ${
