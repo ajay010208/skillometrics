@@ -139,6 +139,9 @@ export default function Opening() {
         src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4"
       />
 
+      {/* static contrast scrim — guarantees text legibility over ANY footage */}
+      <div aria-hidden className="opening-scrim" />
+
       {/* nav */}
       <nav className="relative z-10 mx-auto flex max-w-7xl flex-row items-center justify-between px-8 py-6">
         <div className="text-3xl tracking-tight text-white" style={{ fontFamily: "'Instrument Serif', serif" }}>
@@ -188,7 +191,7 @@ export default function Opening() {
             </button>
             <button
               onClick={exploreFirst}
-              className="animate-fade-rise-delay-2 mt-5 text-sm text-white/50 underline-offset-4 transition-colors hover:text-white/90 hover:underline"
+              className="animate-fade-rise-delay-2 mt-5 text-sm text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline"
             >
               or explore the dashboard first →
             </button>
@@ -227,7 +230,7 @@ export default function Opening() {
               </button>
             </div>
 
-            <div className="my-6 flex items-center gap-4 text-[11px] uppercase tracking-widest text-white/60">
+            <div className="my-6 flex items-center gap-4 text-[11px] uppercase tracking-widest text-white/70">
               <span className="h-px flex-1 bg-white/15" /> or use a demo account <span className="h-px flex-1 bg-white/15" />
             </div>
 
@@ -253,7 +256,7 @@ export default function Opening() {
 
             <button
               onClick={() => setRevealed(false)}
-              className="mt-6 text-sm text-white/50 transition-colors hover:text-white"
+              className="mt-6 text-sm text-white/70 transition-colors hover:text-white"
             >
               ← Back
             </button>
