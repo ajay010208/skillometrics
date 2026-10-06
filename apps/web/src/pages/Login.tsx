@@ -149,7 +149,7 @@ export default function Login() {
           </div>
         )}
         {!supabase && (
-          <p className="mt-2 text-[11px] text-slate-400">
+          <p className="mt-2 text-[11px] text-slate-500">
             Live sign-in needs Supabase keys in <code>.env</code> — demo accounts always work.
           </p>
         )}

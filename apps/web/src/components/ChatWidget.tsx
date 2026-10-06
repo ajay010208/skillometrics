@@ -54,7 +54,7 @@ export function ChatWidget() {
       <button
         onClick={() => setOpen((o) => !o)}
         className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full
-          bg-gradient-to-r from-cyan-500 to-violet-500 text-2xl shadow-xl shadow-cyan-500/30
+          bg-slate-900 text-2xl text-white shadow-lg
           hover:scale-105 active:scale-95 transition-transform"
         aria-label="AI Career Counsellor"
       >
@@ -63,7 +63,7 @@ export function ChatWidget() {
 
       {open && (
         <div
-          className="glass fixed bottom-24 right-5 z-50 flex h-[520px] w-[380px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden !rounded-3xl animate-fade-up"
+          className="glass-overlay fixed bottom-24 right-5 z-50 flex h-[520px] w-[380px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden !rounded-3xl animate-fade-up"
           role="region"
           aria-label="AI Career Counsellor chat"
         >
@@ -89,7 +89,7 @@ export function ChatWidget() {
                 key={i}
                 className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-3.5 py-2.5 text-sm ${
                   m.role === "user"
-                    ? "ml-auto bg-gradient-to-r from-cyan-500/80 to-violet-500/80 text-slate-900"
+                    ? "ml-auto bg-amber-500/80 text-slate-900"
                     : "bg-slate-900/[0.06] text-slate-800"
                 }`}
               >
@@ -99,9 +99,9 @@ export function ChatWidget() {
             {busy && (
               <div className="w-20 rounded-2xl bg-slate-900/[0.06] px-3.5 py-3">
                 <div className="flex gap-1">
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-300" />
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-300 [animation-delay:0.15s]" />
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-300 [animation-delay:0.3s]" />
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-amber-400" />
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-amber-400 [animation-delay:0.15s]" />
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-amber-400 [animation-delay:0.3s]" />
                 </div>
               </div>
             )}

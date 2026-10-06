@@ -55,7 +55,7 @@ export default function CandidateProfile() {
       {/* header */}
       <GlassCard className="p-6">
         <div className="flex flex-wrap items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/30 to-violet-500/30 text-2xl font-black">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500/30 to-orange-500/30 text-2xl font-black">
             {c.name.slice(0, 1)}
           </div>
           <div className="flex-1">

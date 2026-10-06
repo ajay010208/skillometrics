@@ -142,18 +142,15 @@ export default function Opening() {
       {/* nav */}
       <nav className="relative z-10 mx-auto flex max-w-7xl flex-row items-center justify-between px-8 py-6">
         <div className="text-3xl tracking-tight text-white" style={{ fontFamily: "'Instrument Serif', serif" }}>
-          SkilloMetrics<sup className="text-xs">®</sup>
+          SkilloMetrics
         </div>
         <div className="hidden items-center gap-6 md:flex">
           <button onClick={() => setRevealed(false)} className="text-sm text-white transition-colors">Home</button>
-          {["Studio", "About", "Journal", "Reach Us"].map((l) => (
-            <span key={l} className="cursor-default text-sm text-white/60 transition-colors hover:text-white">{l}</span>
-          ))}
         </div>
         <button
           onClick={() => (revealed ? undefined : setRevealed(true))}
           aria-label={revealed ? "Sign-in options are open" : "Open sign-in options"}
-          className="liquid-glass rounded-full px-6 py-2.5 text-sm text-white transition-transform hover:scale-[1.03]"
+          className="flat-pill rounded-full px-6 py-2.5 text-sm text-white transition-transform hover:scale-[1.03]"
         >
           Begin Journey
         </button>
@@ -185,7 +182,7 @@ export default function Opening() {
             </p>
             <button
               onClick={() => setRevealed(true)}
-              className="liquid-glass animate-fade-rise-delay-2 mt-12 cursor-pointer rounded-full px-14 py-5 text-base text-white transition-transform hover:scale-[1.03]"
+              className="flat-pill animate-fade-rise-delay-2 mt-12 cursor-pointer rounded-full px-14 py-5 text-base text-white transition-transform hover:scale-[1.03]"
             >
               Get Started
             </button>
@@ -210,27 +207,27 @@ export default function Opening() {
               <button
                 onClick={() => oauthSignIn("google")}
                 disabled={busy !== null}
-                className="liquid-glass flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-sm font-medium text-white transition-transform hover:scale-[1.02] disabled:opacity-60"
+                className="flat-pill flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-sm font-medium text-white transition-transform hover:scale-[1.02] disabled:opacity-60"
               >
                 <GoogleIcon /> Continue with Google {busy === "google" && "…"}
               </button>
               <button
                 onClick={() => oauthSignIn("github")}
                 disabled={busy !== null}
-                className="liquid-glass flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-sm font-medium text-white transition-transform hover:scale-[1.02] disabled:opacity-60"
+                className="flat-pill flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-sm font-medium text-white transition-transform hover:scale-[1.02] disabled:opacity-60"
               >
                 <GitHubIcon /> Continue with GitHub {busy === "github" && "…"}
               </button>
               <button
                 onClick={() => oauthSignIn("linkedin_oidc")}
                 disabled={busy !== null}
-                className="liquid-glass flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-sm font-medium text-white transition-transform hover:scale-[1.02] disabled:opacity-60"
+                className="flat-pill flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-sm font-medium text-white transition-transform hover:scale-[1.02] disabled:opacity-60"
               >
                 <LinkedInIcon /> Continue with LinkedIn {busy === "linkedin_oidc" && "…"}
               </button>
             </div>
 
-            <div className="my-6 flex items-center gap-4 text-[11px] uppercase tracking-widest text-white/40">
+            <div className="my-6 flex items-center gap-4 text-[11px] uppercase tracking-widest text-white/60">
               <span className="h-px flex-1 bg-white/15" /> or use a demo account <span className="h-px flex-1 bg-white/15" />
             </div>
 
@@ -245,7 +242,7 @@ export default function Opening() {
                   key={email}
                   onClick={() => demoEntry(email)}
                   disabled={busy !== null}
-                  className="liquid-glass rounded-2xl px-4 py-3 text-sm text-white/90 transition-transform hover:scale-[1.02] disabled:opacity-60"
+                  className="flat-pill rounded-2xl px-4 py-3 text-sm text-white/90 transition-transform hover:scale-[1.02] disabled:opacity-60"
                 >
                   {busy === email ? "…" : label}
                 </button>

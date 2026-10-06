@@ -102,7 +102,7 @@ export default function Profile() {
 
       <GlassCard className="space-y-4 p-6">
         <div className="flex items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/30 to-violet-500/30 text-2xl font-black">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500/30 to-orange-500/30 text-2xl font-black">
             {(form.name ?? t.name).slice(0, 1)}
           </div>
           <div>
